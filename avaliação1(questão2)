@@ -1,0 +1,47 @@
+ublic class SistemaEscolar {
+
+    public static void main(String[] args) {
+        // Cria um objeto Scanner para receber a entrada do usuário
+        Scanner scanner = new Scanner(System.in);
+        double celsius, fahrenheit, kelvin;
+
+        System.out.println("==================================================");
+        System.out.println("          CONVERSOR DE TEMPERATURAS (C/F/K)       ");
+        System.out.println("==================================================");
+
+        try {
+            // Solicita a temperatura em Celsius
+            System.out.print("Digite a temperatura em graus Celsius (°C): ");
+            // Lê o valor digitado pelo usuário
+            celsius = scanner.nextDouble();
+
+            // 1. Cálculo da conversão para Fahrenheit (°F)
+            // Fórmula: F = (C * 9/5) + 32
+            // Usamos 9.0/5.0 para garantir a divisão em ponto flutuante, que resulta em 1.8
+            fahrenheit = (celsius * 9.0 / 5.0) + 32.0;
+
+            // 2. Cálculo da conversão para Kelvin (K)
+            // Fórmula: K = C + 273.15
+            kelvin = celsius + 273.15;
+
+            // Apresentação dos resultados de forma clara e informativa
+            System.out.println("\n--- Resultados da Conversão ---");
+            System.out.printf("Temperatura Original (Celsius):  %.2f °C\n", celsius);
+            System.out.printf("Temperatura Convertida (Fahrenheit): %.2f °F\n", fahrenheit);
+            System.out.printf("Temperatura Convertida (Kelvin):     %.2f K\n", kelvin);
+            System.out.println("--------------------------------------------------");
+
+        } catch (java.util.InputMismatchException e) {
+            // Tratamento de erro caso o usuário digite algo que não seja um número
+            System.out.println("\nERRO: Entrada inválida. Por favor, digite um valor numérico para a temperatura.");
+        } catch (Exception e) {
+            // Tratamento de outros erros inesperados
+            System.out.println("\nOcorreu um erro inesperado: " + e.getMessage());
+        } finally {
+            // Fecha o objeto Scanner para liberar recursos do sistema
+            scanner.close();
+        }
+
+        System.out.println("==================================================");
+    }
+}
