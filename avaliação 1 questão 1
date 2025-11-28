@@ -1,0 +1,120 @@
+* Sistema Escolar Simples em Java para cálculo de médias.
+ *
+ * O sistema recebe 8 notas anuais (0-10), calcula as 4 médias bimestrais,
+ * a média final e verifica a situação de aprovação, considerando
+ * a média 7.0 como a nota mínima para aprovação.
+ */
+public class SistemaEscolar {
+
+    // A média mínima para aprovação, conforme especificado no exercício.
+    private static final double MEDIA_APROVATIVA = 7.0;
+
+    public static void main(String[] args) {
+        // As 8 notas anuais do aluno (simulando a entrada de dados).
+        // Estas notas estão organizadas em 4 bimesters, com 2 notas por bimester.
+        // Exemplo de notas: [B1-Nota1, B1-Nota2, B2-Nota1, B2-Nota2, B3-Nota1, B3-Nota2, B4-Nota1, B4-Nota2]
+        double[] notasAnuais = {8.5, 7.0, 6.0, 9.5, 7.5, 7.5, 6.5, 8.0};
+
+        System.out.println("==================================================");
+        System.out.println("        SISTEMA DE CÁLCULO DE MÉDIAS ESCOLARES    ");
+        System.out.println("==================================================");
+        System.out.println("Média Mínima para Aprovação: " + MEDIA_APROVATIVA);
+        System.out.println("--------------------------------------------------");
+
+        // 1. Apresentar as notas de entrada
+        apresentarNotas(notasAnuais);
+
+        // 2. Calcular as médias bimestrais
+        double[] mediasBimestrais = calcularMediasBimestrais(notasAnuais);
+
+        // 3. Apresentar as médias bimestrais
+        apresentarMediasBimestrais(mediasBimestrais);
+
+        // 4. Calcular a média final
+        double mediaFinal = calcularMediaFinal(mediasBimestrais);
+
+        // 5. Apresentar a média final e a situação do aluno
+        apresentarResultadoFinal(mediaFinal);
+
+        System.out.println("==================================================");
+    }
+
+    /**
+     * Apresenta todas as 8 notas recebidas, organizadas por bimester.
+     * @param notas O array de 8 notas.
+     */
+    private static void apresentarNotas(double[] notas) {
+        System.out.println("\n--- Notas Anuais Registradas ---");
+        for (int i = 0; i < notas.length; i += 2) {
+            int bimester = (i / 2) + 1;
+            System.out.printf("Bimester %d: Nota 1 = %.1f | Nota 2 = %.1f\n",
+                    bimester, notas[i], notas[i + 1]);
+        }
+        System.out.println("--------------------------------------------------");
+    }
+
+
+    /**
+     * Calcula as 4 médias bimestrais (média de 2 notas por bimester).
+     * @param notas O array de 8 notas.
+     * @return Um array de 4 doubles contendo as médias bimestrais.
+     */
+    private static double[] calcularMediasBimestrais(double[] notas) {
+        // Serão 4 bimesters (8 notas / 2 notas por bimester)
+        double[] medias = new double[4];
+
+        for (int i = 0; i < 4; i++) {
+            // Índice inicial das notas para o bimester atual
+            int index1 = i * 2;
+            int index2 = index1 + 1;
+
+            // Média do bimester: (Nota 1 + Nota 2) / 2
+            double mediaBimester = (notas[index1] + notas[index2]) / 2.0;
+            medias[i] = mediaBimester;
+        }
+
+        return medias;
+    }
+
+    /**
+     * Apresenta as médias de cada um dos 4 bimesters.
+     * @param medias O array de 4 médias bimestrais.
+     */
+    private static void apresentarMediasBimestrais(double[] medias) {
+        System.out.println("\n--- Médias Bimestrais Calculadas ---");
+        for (int i = 0; i < medias.length; i++) {
+            System.out.printf("Média do %dº Bimester: %.2f\n", (i + 1), medias[i]);
+        }
+        System.out.println("--------------------------------------------------");
+    }
+
+    /**
+     * Calcula a média final do aluno (média aritmética das 4 médias bimestrais).
+     * @param mediasBimestrais O array de 4 médias bimestrais.
+     * @return A média final do aluno.
+     */
+    private static double calcularMediaFinal(double[] mediasBimestrais) {
+        double somaDasMedias = 0.0;
+        for (double media : mediasBimestrais) {
+            somaDasMedias += media;
+        }
+
+        // Média final é a soma das 4 médias bimestrais dividida por 4
+        return somaDasMedias / mediasBimestrais.length;
+    }
+
+    /**
+     * Apresenta a média final e a situação de aprovação/reprovação do aluno.
+     * @param mediaFinal A média final calculada.
+     */
+    private static void apresentarResultadoFinal(double mediaFinal) {
+        System.out.println("\n--- Resultado Final ---");
+        System.out.printf("MÉDIA FINAL DO ALUNO: %.2f\n", mediaFinal);
+
+        if (mediaFinal >= MEDIA_APROVATIVA) {
+            System.out.println("SITUAÇÃO: APROVADO! Parabéns.");
+        } else {
+            System.out.println("SITUAÇÃO: REPROVADO. É necessário estudar mais para a próxima vez.");
+        }
+    }
+}
